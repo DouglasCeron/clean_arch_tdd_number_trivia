@@ -26,7 +26,7 @@ void main() {
     when(mockNumbertriviaRepository?.getConcreteNumberTrivia(any))
         .thenAnswer((_) async => Right(tnumberTrivia));
     // act
-    final result = await usecase?.execute(number: tNumber);
+    final result = await usecase!(number: tNumber);
     //assert
     expect(result, Right(tnumberTrivia));
     verify(mockNumbertriviaRepository?.getConcreteNumberTrivia(tNumber));
