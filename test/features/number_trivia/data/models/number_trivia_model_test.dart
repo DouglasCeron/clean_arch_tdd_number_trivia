@@ -46,7 +46,6 @@ void main() {
           final result = NumberTriviaModel.fromJson(jsonMap);
 
           //assert
-
           expect(result, tNumberTriviaModel);
         },
       );
