@@ -21,12 +21,12 @@ void main() {
   final tNumber = 1;
   final tnumberTrivia = NumberTrivia(number: 1, text: ' test');
 
-  test('Should bring the data from the repository', () async {
+  test('Should get trivia for the number from the repository', () async {
     //arrange
     when(mockNumbertriviaRepository?.getConcreteNumberTrivia(any))
         .thenAnswer((_) async => Right(tnumberTrivia));
     // act
-    final result = await usecase!(number: tNumber);
+    final result = await usecase!(Params(number: tNumber));
     //assert
     expect(result, Right(tnumberTrivia));
     verify(mockNumbertriviaRepository?.getConcreteNumberTrivia(tNumber));

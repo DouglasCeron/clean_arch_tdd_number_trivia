@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:clean_arch_tdd_number_trivia/core/error/failures.dart';
 import 'package:clean_arch_tdd_number_trivia/core/usecases/usecase.dart';
 import 'package:clean_arch_tdd_number_trivia/features/number_trivia/domain/entities/number_trivia.dart';
@@ -7,22 +5,13 @@ import 'package:clean_arch_tdd_number_trivia/features/number_trivia/domain/repos
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-class GetConcreteNumberTrivia implements Usecase<NumberTrivia, Params> {
+class GetRandomNumberTrivia implements Usecase<NumberTrivia, NoParams> {
   final NumberTriviaRepository repository;
-  GetConcreteNumberTrivia({
-    required this.repository,
-  });
+
+  GetRandomNumberTrivia(this.repository);
 
   @override
-  Future<Either<Failure, NumberTrivia>> call(Params params) async {
-    return await repository.getConcreteNumberTrivia(params.number);
+  Future<Either<Failure, NumberTrivia>> call(NoParams params) async {
+    return await repository.getRandomNumberTrivia();
   }
-}
-
-class Params extends Equatable {
-  final int number;
-  Params({required this.number});
-
-  @override
-  List<Object?> get props => [number];
 }
