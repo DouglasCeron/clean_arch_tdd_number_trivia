@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:clean_arch_tdd_number_trivia/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:dartz/dartz.dart';
 
 import 'package:clean_arch_tdd_number_trivia/core/error/failures.dart';
@@ -9,9 +10,9 @@ import 'package:clean_arch_tdd_number_trivia/features/number_trivia/domain/entit
 import 'package:clean_arch_tdd_number_trivia/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 
 class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
-  final NumberTriviaRemoteDatasource remoteDatasource;
-  final NumberTriviaLocalDatasource localDatasource;
-  final NetworkInfo networkInfo;
+  final NumberTriviaRemoteDatasource? remoteDatasource;
+  final NumberTriviaLocalDatasource? localDatasource;
+  final NetworkInfo? networkInfo;
 
   NumberTriviaRepositoryImpl({
     required this.remoteDatasource,
@@ -22,10 +23,11 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   @override
   Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(
       int number) async {
-    networkInfo.isConnected;
-    final remoteTrivia = await remoteDatasource.getConcreteNumberTrivia(number);
-    localDatasource.cacheNumberTrivia(remoteTrivia);
-    return Right(remoteTrivia);
+    networkInfo?.isConnected;
+    final remoteTrivia =
+        await remoteDatasource?.getConcreteNumberTrivia(number);
+    localDatasource?.cacheNumberTrivia(remoteTrivia as NumberTriviaModel);
+    return Right(remoteTrivia as NumberTriviaModel);
   }
 
   @override

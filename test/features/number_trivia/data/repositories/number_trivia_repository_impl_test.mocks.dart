@@ -67,15 +67,14 @@ class MockNumberTriviaLocalDatasource extends _i1.Mock
         )),
       ) as _i4.Future<_i2.NumberTriviaModel>);
   @override
-  _i4.Future<void> cacheNumbertrivia(_i2.NumberTriviaModel? triviaToCache) =>
+  _i4.Future<bool>? cacheNumberTrivia(_i2.NumberTriviaModel? triviaToCache) =>
       (super.noSuchMethod(
         Invocation.method(
-          #cacheNumbertrivia,
+          #cacheNumberTrivia,
           [triviaToCache],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValueForMissingStub: null,
+      ) as _i4.Future<bool>?);
 }
 
 /// A class which mocks [NumberTriviaRemoteDatasource].

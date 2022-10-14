@@ -17,10 +17,10 @@ import 'number_trivia_repository_impl_test.mocks.dart';
   MockSpec<NetworkInfo>(),
 ])
 void main() {
-  late NumberTriviaRepositoryImpl repository;
-  late MockNumberTriviaLocalDatasource mockLocalDatasource;
-  late MockNumberTriviaRemoteDatasource mockRemoteDatasource;
-  late MockNetworkInfo mockNetworkInfo;
+  NumberTriviaRepositoryImpl? repository;
+  MockNumberTriviaLocalDatasource? mockLocalDatasource;
+  MockNumberTriviaRemoteDatasource? mockRemoteDatasource;
+  MockNetworkInfo? mockNetworkInfo;
 
   setUp(
     () {
@@ -43,46 +43,47 @@ void main() {
 
     test('should check if the device is online', () async {
       //arrange
-      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      when(mockNetworkInfo?.isConnected).thenAnswer((_) async => true);
       //act
-      repository.getConcreteNumberTrivia(tNumber);
+      repository?.getConcreteNumberTrivia(tNumber);
       //assert
-      verify(mockNetworkInfo.isConnected);
+      verify(mockNetworkInfo?.isConnected);
     });
 
     group('device is online', () {
       setUp(() {
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+        when(mockNetworkInfo?.isConnected).thenAnswer((_) async => true);
       });
 
       test(
           'should return remote data when the call to remote data source is successful',
           () async {
         //arrange
-        when(mockRemoteDatasource.getConcreteNumberTrivia(any))
+        when(mockRemoteDatasource?.getConcreteNumberTrivia(any))
             .thenAnswer((_) async => tNumberTriviaModel);
         //act
-        final result = await repository.getConcreteNumberTrivia(tNumber);
+        final result = await repository?.getConcreteNumberTrivia(tNumber);
         //assert
-        verify(mockRemoteDatasource.getConcreteNumberTrivia(tNumber));
+        verify(mockRemoteDatasource?.getConcreteNumberTrivia(tNumber));
         expect(result, equals(Right(tNumberTrivia)));
       });
       test(
           'should cache the data locally when the call to remote data source is successful',
           () async {
         //arrange
-        when(mockRemoteDatasource.getConcreteNumberTrivia(any))
+        when(mockRemoteDatasource?.getConcreteNumberTrivia(any))
             .thenAnswer((_) async => tNumberTriviaModel);
         //act
-        repository.getConcreteNumberTrivia(tNumber);
+        await repository?.getConcreteNumberTrivia(tNumber);
         //assert
-        verify(mockRemoteDatasource.getConcreteNumberTrivia(tNumber));
-        verify(mockLocalDatasource.cacheNumberTrivia(tNumberTriviaModel));
+        verify(await mockRemoteDatasource?.getConcreteNumberTrivia(tNumber));
+        verify(
+            await mockLocalDatasource?.cacheNumberTrivia(tNumberTriviaModel));
       });
     });
     group('device is offLine', () {
       setUp(() {
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+        when(mockNetworkInfo?.isConnected).thenAnswer((_) async => false);
       });
     });
   });
